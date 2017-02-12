@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_select_country"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="com.example.zhangxinyu.personalinfo.SelectCountry">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_country_state" />
+    <Button
+        android:id="@+id/btn_country_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_country_state"
+        android:text="@string/btn_done"
+        android:onClick="countryDone"/>
+    <Button
+        android:id="@+id/btn_country_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_country_state"
+        android:layout_toRightOf="@+id/btn_country_done"
+        android:text="@string/btn_cancel"
+        android:onClick="countryCancel"/>
+</RelativeLayout>

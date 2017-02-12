@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_select_date"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin"
+    tools:context="com.example.zhangxinyu.personalinfo.SelectDate">
+    <DatePicker
+        android:id="@+id/date_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:startYear="1980"/>
+    <Button
+        android:id="@+id/btn_date_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_picker"
+        android:text="@string/btn_done"
+        android:onClick="dateDone"/>
+    <Button
+        android:id="@+id/btn_date_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_picker"
+        android:layout_toRightOf="@+id/btn_date_done"
+        android:text="@string/btn_cancel"
+        android:onClick="dateCancel"/>
+
+</RelativeLayout>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="country_list">
+        <item>China</item>
+        <item>India</item>
+        <item>Mexico</item>
+        <item>USA</item>
+    </string-array>
+    <string-array name="china">
+        <item>Beijing Municipality</item>
+        <item>Tianjin Municipality</item>
+        <item>Hebei</item>
+        <item>Shanxi</item>
+        <item>Inner Mongolia</item>
+        <item>Liaoning</item>
+        <item>Jilin</item>
+        <item>Heilongjiang</item>
+        <item>Shanghai Municipality</item>
+        <item>Jiangsu</item>
+        <item>Zhejiang</item>
+        <item>Anhui</item>
+        <item>Fujian</item>
+        <item>China</item>
+        <item>Jiangxi</item>
+        <item>Shandong</item>
+        <item>Henan</item>
+        <item>Hubei</item>
+        <item>Hunan</item>
+        <item>Guangdong</item>
+        <item>Guangxi Zhuang</item>
+        <item>Hainan</item>
+        <item>Chongqing Municipality</item>
+        <item>Sichuan</item>
+        <item>Guizhou</item>
+        <item>Yunnan</item>
+        <item>Tibet Autonomous Region</item>
+        <item>Shaanxi</item>
+        <item>Gansu</item>
+        <item>Qinghai</item>
+        <item>Ningxia Hui</item>
+        <item>Xinjiang Uyghur</item>
+        <item>Hong Kong</item>
+        <item>Macau</item>
+        <item>Taiwan</item>
+    </string-array>
+    <string-array name="india">
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chhattisgarh</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttar Pradesh</item>
+        <item>Uttarakhand</item>
+        <item>West Bengal</item>
+    </string-array>
+    <string-array name="mexico">
+        <item>Aguascalientes</item>
+        <item>Baja California</item>
+        <item>Baja California Sur</item>
+        <item>Campeche</item>
+        <item>Chiapas</item>
+        <item>Chihuahua</item>
+        <item>Coahuil</item>
+        <item>Colim</item>
+        <item>Durango</item>
+        <item>Guanajuato</item>
+        <item>Guerrero</item>
+        <item>Hidalgo</item>
+        <item>Jalisco</item>
+        <item>México</item>
+        <item>Michoacán</item>
+        <item>Morelos</item>
+        <item>Nayarit</item>
+        <item>Nuevo Leó</item>
+        <item>Oaxaca</item>
+        <item>Puebla</item>
+        <item>Querétaro</item>
+        <item>Quintana Roo</item>
+        <item>San Luis Potosí</item>
+        <item>Sinaloa</item>
+        <item>Sonor</item>
+        <item>Tabasc</item>
+        <item>Tamaulipa</item>
+        <item>Tlaxcala</item>
+        <item>Veracruz</item>
+        <item>Yucatá</item>
+        <item>Zacatecas</item>
+    </string-array>
+    <string-array name="usa">
+        <item>Alabama</item>
+        <item>Alaska</item>
+        <item>Arizona</item>
+        <item>Arkansas</item>
+        <item>California</item>
+        <item>Colorado</item>
+        <item>Connecticut</item>
+        <item>Delaware</item>
+        <item>Florida</item>
+        <item>Georgia</item>
+        <item>Hawaii</item>
+        <item>Idaho</item>
+        <item>Illinois</item>
+        <item>Indiana</item>
+        <item>Iowa</item>
+        <item>Kansa</item>
+        <item>Kentucky</item>
+        <item>Louisiana</item>
+        <item>Maine</item>
+        <item>Maryland</item>
+        <item>Massachusetts</item>
+        <item>Michigan</item>
+        <item>Minnesota</item>
+        <item>Mississippi</item>
+        <item>Missouri</item>
+        <item>Montana</item>
+        <item>Nebraska</item>
+        <item>Nevada</item>
+        <item>New Hampshire</item>
+        <item>New Jersey</item>
+        <item>New Mexico</item>
+        <item>New York</item>
+        <item>North Carolina</item>
+        <item>North Dakota</item>
+        <item>Ohio</item>
+        <item>Oklahoma</item>
+        <item>Oregon</item>
+        <item>Pennsylvania</item>
+        <item>Rhode Island</item>
+        <item>South Carolina</item>
+        <item>South Dakota</item>
+        <item>Tennessee</item>
+        <item>Texas</item>
+        <item>Utah</item>
+        <item>Vermont</item>
+        <item>Virginia</item>
+        <item>Washington</item>
+        <item>West Virginia</item>
+        <item>Wisconsin</item>
+        <item>Whoming</item>
+    </string-array>
+</resources>

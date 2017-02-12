@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="com.example.zhangxinyu.personalinfo.MainActivity">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/label_first_name"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/first_name" />
+        <EditText
+            android:id="@+id/first_name"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_family_name"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/family_name"/>
+        <EditText
+            android:id="@+id/family_name"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:id="@+id/label_age"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/age"
+            android:layout_below="@+id/family_name"/>
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:inputType="number" />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:layout_below="@+id/age"/>
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:inputType="textEmailAddress" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/label_phone"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/phone"
+            android:layout_below="@+id/email"/>
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:inputType="phone" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_birthdate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/birthdate"
+            android:layout_below="@+id/phone"/>
+        <TextView
+            android:id="@+id/birthdate"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:enabled="true"
+            android:inputType="date" />
+        <Button
+            android:id="@+id/btn_birth"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/btn_select"
+            android:onClick="selectDate"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:id="@+id/label_country_state"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/country_state"/>
+        <TextView
+            android:id="@+id/country_state"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"/>
+        <Button
+            android:id="@+id/btn_country"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/btn_select"
+            android:onClick="selectCountry"/>
+    </TableRow>
+    <TableRow>
+        <Button
+            android:id="@+id/update"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/country_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/btn_done"
+            android:onClick="onClick"/>
+    </TableRow>
+
+</TableLayout>
