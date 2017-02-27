@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Simple Drawing</string>
+    <string name="current_mode">Drawing</string>
+</resources>

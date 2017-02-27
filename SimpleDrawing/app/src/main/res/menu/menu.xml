@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:actionMenu="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Mode"
+        android:id="@+id/mode"
+        actionMenu:showAsAction="ifRoom">
+        <menu >
+            <item android:title="Draw"
+                android:id="@+id/draw" />
+            <item android:title="Delete"
+                android:id="@+id/delete" />
+            <item android:title="Move"
+                android:id="@+id/move" />
+        </menu>
+    </item>
+    <item android:title="Color"
+        android:id="@+id/color"
+        actionMenu:showAsAction="ifRoom">
+        <menu >
+            <item android:title="Blue"
+                android:id="@+id/blue" />
+            <item android:title="Red"
+                android:id="@+id/red" />
+            <item android:title="Green"
+                android:id="@+id/green" />
+            <item android:title="Black"
+                android:id="@+id/black" />
+        </menu>
+    </item>
+</menu>
