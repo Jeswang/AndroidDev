@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin"
+    tools:context="com.example.xinyu.hometown.MainActivity">
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_nickname"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname" />
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/password" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:password="true"
+            android:textAllCaps="false" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_country"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/country"/>
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"/>
+        <Button
+            android:id="@+id/btn_country"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/btn_select"
+            android:onClick="selectCountry"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_state"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/state" />
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"/>
+        <Button
+            android:id="@+id/btn_state"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/btn_select"
+            android:onClick="selectState"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_city"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/city" />
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_year"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/year" />
+        <EditText
+            android:id="@+id/year"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/label_lat_lng"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/latitude" />
+        <EditText
+            android:id="@+id/latlng"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp" />
+        <Button
+            android:id="@+id/btn_lat_lng"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/btn_map"
+            android:onClick="setLatLng"/>
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/latlng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/btn_done"
+            android:onClick="userSubmit"/>
+    </TableRow>
+
+</TableLayout>

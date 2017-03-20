@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Hometown</string>
+    <string name="nickname">nickname</string>
+    <string name="password">password</string>
+    <string name="country">country</string>
+    <string name="state">state</string>
+    <string name="city">city</string>
+    <string name="year">year</string>
+    <string name="latitude">latlng</string>
+    <string name="longitude">longitude</string>
+    <string name="btn_select">select</string>
+    <string name="btn_done">done</string>
+    <string name="btn_cancel">cancel</string>
+    <string name="btn_map">map</string>
+
+    <string name="saved_country">saved_country</string>
+    <string name="saved_state">saved_state</string>
+    <string name="saved_lat">saved_lat</string>
+    <string name="saved_lng">saved_lng</string>
+</resources>
