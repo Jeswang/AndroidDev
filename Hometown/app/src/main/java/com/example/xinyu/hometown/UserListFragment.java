@@ -2,6 +2,7 @@ package com.example.xinyu.hometown;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class UserListFragment extends ListFragment {
     CustomArrayAdapter adapter;
     public interface OnUserSelectedListener {
         public void onUserSelected(UserInfo ListName);
+        public void userListViewCreated();
     }
     UserListFragment.OnUserSelectedListener mListener;
 
@@ -50,5 +52,13 @@ public class UserListFragment extends ListFragment {
     public void updateData(List<UserInfo> userInfos) {
         this.userInfos = userInfos;
         adapter.setData(userInfos);
+    }
+    @Override
+    public void onViewCreated (View view, Bundle savedInstanceState) {
+        mListener.userListViewCreated();
+    }
+    public void reload() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 }

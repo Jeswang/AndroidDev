@@ -12,6 +12,8 @@
     <string name="btn_done">done</string>
     <string name="btn_cancel">cancel</string>
     <string name="btn_map">map</string>
+    <string name="btn_signup">sign up</string>
+    <string name="btn_signin">sign in</string>
 
     <string name="saved_country">saved_country</string>
     <string name="saved_state">saved_state</string>

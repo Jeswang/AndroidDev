@@ -3,6 +3,8 @@ package com.example.xinyu.hometown;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,18 +18,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TextWatcher {
     TextView countryText;
@@ -41,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     boolean isPasswordValid;
     boolean isYearValid;
     RequestQueue queue;
+    //
+    private DatabaseHelper namesHelper;
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,16 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             }
         });
         cityEdit = (EditText)findViewById(R.id.city);
+        //
+        namesHelper = (new DatabaseHelper(this));
+        SQLiteDatabase nameDb = namesHelper.getWritableDatabase();
+        Cursor result = nameDb.rawQuery("select * from hometown where nickname = ?",
+                new String[] { "zxy" });
+        int rowCount = result.getCount(); if (rowCount > 0) {
+            result.moveToFirst();
+            System.out.println(result.getString(1) + " " + result.getString(2)+ " " + result.getString(3)+ " " + result.getString(4)+ " " + result.getInt(5));
+        }
+        //
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -168,6 +179,10 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             getUserInfoPost();
         }
     }
+    public void userLogin(View button) {
+        Intent go = new Intent(this,UserSigninActivity.class);
+        startActivity(go);
+    }
     public void getUserInfoPost() {
         Log.i("rew", "Start");
         Response.Listener<JSONObject> success = new Response.Listener<JSONObject>() {
@@ -206,11 +221,12 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
                         "\",\"state\":\""+stateText.getText()+
                         "\",\"city\":\""+cityEdit.getText()+
                         "\",\"year\":"+yearEdit.getText()+
-                        "\",\"latitude\":"+sharedPref.getString("saved_lat", "")+
-                        "\",\"longitude\":"+sharedPref.getString("saved_lng", "")+"}";
+                        ",\"latitude\":"+sharedPref.getString("saved_lat", "")+
+                        ",\"longitude\":"+sharedPref.getString("saved_lng", "")+"}";
             }
+            //System.out.println(jsonString);
             JSONObject jsonBody = new JSONObject(jsonString);
-            JsonObjectRequest getRequest = new JsonObjectRequest( url, jsonBody, success, failure);
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,url, jsonBody, success, failure);
             queue = Volley.newRequestQueue(this);
             queue.add(getRequest);
         } catch(Exception e) {

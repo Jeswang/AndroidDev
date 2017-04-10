@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.android.volley.RequestQueue;
@@ -26,7 +28,7 @@ import java.util.List;
  * Created by xinyu on 3/19/17.
  */
 
-public class SelectListActivity extends AppCompatActivity implements UserListFragment.OnUserSelectedListener, Spinner.OnItemSelectedListener{
+public class SelectListActivity extends AppCompatActivity implements ListView.OnScrollListener, UserListFragment.OnUserSelectedListener, Spinner.OnItemSelectedListener{
     UserListFragment userList;
     List<UserInfo> userInfoList;
     List<UserInfo> filteredUserInfoList;
@@ -35,11 +37,12 @@ public class SelectListActivity extends AppCompatActivity implements UserListFra
     Spinner yearSpinner;
     RequestQueue queue;
     String[] countryArray;
-    String countrySelected;
+    String countrySelected = "all";
     String[] stateArray;
-    String stateSelected;
+    String stateSelected = "all";
     ArrayList<String> yearArray;
-    String yearSelected;
+    String yearSelected = "all";
+    ListView tempListView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_list);
@@ -55,48 +58,81 @@ public class SelectListActivity extends AppCompatActivity implements UserListFra
         getCountryRequest();
         getYearRequest();
     }
+    int currentPage = 0;
+    boolean loading = false;
     public void getUserInfoRequest() {
         Log.i("rew", "Start");
+        if(loading) {
+            return;
+        }
+        loading = true;
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 Log.d("rew", response.toString());
                 FragmentManager fm = getFragmentManager();
+                userInfoList = new ArrayList<UserInfo>();
+                Gson gson = new Gson();
+                if (response != null) {
+                    int len = response.length();
+                    UserInfo[] users = gson.fromJson(response.toString(), UserInfo[].class);
+                    for (int i = 0; i < len; i++) {
+                        userInfoList.add(users[i]);
+                    }
+                }
                 if (fm.findFragmentById(R.id.selected_list) == null) {
                     userList = new UserListFragment();
-                    //userList.numbersText = new UserInfo[response.length()];
-                    userInfoList = new ArrayList<UserInfo>();
-                    Gson gson = new Gson();
-                    if (response != null) {
-                        int len = response.length();
-                        UserInfo[] users = gson.fromJson(response.toString(), UserInfo[].class);
-                        for (int i = 0; i < len; i++) {
-                            userInfoList.add(users[i]);
-                        }
-                        userList.userInfos= userInfoList;
-                    }
+                    userList.userInfos = userInfoList;
                     fm.beginTransaction().add(R.id.selected_list, userList).commit();
+                } else {
+                    userList.userInfos.addAll(userInfoList);
+                    userInfoList = userList.userInfos;
+                    userList.reload();
                 }
+                currentPage += 1;
+                loading = false;
             } };
         Response.ErrorListener failure = new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.d("rew", error.toString());
+                loading = false;
             }
         };
-        String url ="http://bismarck.sdsu.edu/hometown/users";
+        String url ="http://bismarck.sdsu.edu/hometown/users?page=" + currentPage + "&reverse=true";
         JsonArrayRequest getRequest = new JsonArrayRequest( url, success, failure);
         queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
     }
+    ////////
+    public void userListViewCreated() {
+        tempListView  = userList.getListView();
+        tempListView.setOnScrollListener(this);
+    }
+    private int preLast;
+
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                && (tempListView.getLastVisiblePosition() - tempListView.getHeaderViewsCount() -
+                tempListView.getFooterViewsCount()) >= (userInfoList.size() - 1)) {
+            System.out.println("Test user list view");
+            getUserInfoRequest();
+            // Now your listview has hit the bottom
+        }
+    }
+
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) { }
+
+    ////////
     public void getCountryRequest() {
         Log.i("rew", "Start");
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 Log.d("rew", response.toString());
-                countryArray = new String[response.length()];
+                countryArray = new String[response.length()+1];
+                countryArray[0] = "all";
                 if (response != null) {
                     int len = response.length();
                     for (int i = 0; i < len; i++) {
-                        countryArray[i] = response.optString(i);
+                        countryArray[i+1] = response.optString(i);
                     }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(SelectListActivity.this, android.R.layout.simple_spinner_item, countryArray);
@@ -114,15 +150,23 @@ public class SelectListActivity extends AppCompatActivity implements UserListFra
         queue.add(getRequest);
     }
     public void getStateRequest(String countrySelected) {
+        if(countrySelected.equals("all")) {
+            stateArray = new String[1];
+            stateArray[0] = "all";
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(SelectListActivity.this, android.R.layout.simple_spinner_item, stateArray);
+            stateSpinner.setAdapter(adapter);
+            return;
+        }
         Log.i("rew", "Start");
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 Log.d("rew", response.toString());
-                stateArray = new String[response.length()];
+                stateArray = new String[response.length()+1];
+                stateArray[0] = "all";
                 if (response != null) {
                     int len = response.length();
                     for (int i = 0; i < len; i++) {
-                        stateArray[i] = response.optString(i);
+                        stateArray[i+1] = response.optString(i);
                     }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(SelectListActivity.this, android.R.layout.simple_spinner_item, stateArray);
@@ -140,6 +184,7 @@ public class SelectListActivity extends AppCompatActivity implements UserListFra
     }
     public void getYearRequest() {
         yearArray = new ArrayList<String>();
+        yearArray.add("all");
         for (int i = 1970; i <= 2017; i++) {
             yearArray.add(Integer.toString(i));
         }
@@ -160,22 +205,23 @@ public class SelectListActivity extends AppCompatActivity implements UserListFra
             yearSelected = yearArray.get(position);
         }
         updateData();
-    }
+            }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parentView) {
-        // your code here
-    }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
 
-    public void updateData() {
-        filteredUserInfoList.clear();
-        for(int i = 0; i < userInfoList.size(); i++) {
-            UserInfo userInfo = userInfoList.get(i);
-            if(userInfo.country.equals(countrySelected) && userInfo.state.equals(stateSelected) && userInfo.year.equals(yearSelected)) {
-                filteredUserInfoList.add(userInfo);
+        public void updateData() {
+            filteredUserInfoList.clear();
+            for(int i = 0; i < userInfoList.size(); i++) {
+                UserInfo userInfo = userInfoList.get(i);
+                if((userInfo.country.equals(countrySelected)||countrySelected.equals("all"))&& (userInfo.state.equals(stateSelected)||stateSelected.equals("all"))
+                        && (userInfo.year.equals(yearSelected)||yearSelected.equals("all"))){
+                    filteredUserInfoList.add(userInfo);
             }
         }
-        if(userList != null) {
+        if(userList != null && filteredUserInfoList != null) {
             userList.updateData(filteredUserInfoList);
         }
     }

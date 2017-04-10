@@ -7,4 +7,5 @@
         android:onClick="selectList" />
     <item android:title="Hometown Map"
         android:onClick="selectMap" />
+    <item android:title="Log in" />
 </menu>
