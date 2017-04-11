@@ -1,6 +1,7 @@
 package com.example.xinyu.hometown;
 
 import android.app.FragmentManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,8 +31,9 @@ import java.util.List;
 
 public class SelectListActivity extends AppCompatActivity implements ListView.OnScrollListener, UserListFragment.OnUserSelectedListener, Spinner.OnItemSelectedListener{
     UserListFragment userList;
-    List<UserInfo> userInfoList;
-    List<UserInfo> filteredUserInfoList;
+    List<UserInfo> responseUsers;
+    List<UserInfo> allUsers;
+    List<UserInfo> filteredUsers;
     Spinner countrySpinner;
     Spinner stateSpinner;
     Spinner yearSpinner;
@@ -52,8 +54,9 @@ public class SelectListActivity extends AppCompatActivity implements ListView.On
         stateSpinner.setOnItemSelectedListener(this);
         yearSpinner = (Spinner)findViewById(R.id.spinner_year);
         yearSpinner.setOnItemSelectedListener(this);
-        filteredUserInfoList = new ArrayList<UserInfo>();
-        userInfoList = new ArrayList<UserInfo>();
+        filteredUsers = new ArrayList<UserInfo>();
+        responseUsers = new ArrayList<UserInfo>();
+        allUsers = new ArrayList<UserInfo>();
         getUserInfoRequest();
         getCountryRequest();
         getYearRequest();
@@ -66,28 +69,37 @@ public class SelectListActivity extends AppCompatActivity implements ListView.On
             return;
         }
         loading = true;
+        final SelectListActivity activity = this;
+        FragmentManager fm = getFragmentManager();
+        final DatabaseHelper usersHelper = new DatabaseHelper(activity);
+        final SQLiteDatabase nameDb = usersHelper.getWritableDatabase();
+        if (fm.findFragmentById(R.id.selected_list) == null) {
+            userList = new UserListFragment();
+            //get data from database
+            userList.userInfos = usersHelper.getUserInfos(nameDb);
+            responseUsers = userList.userInfos;
+            fm.beginTransaction().add(R.id.selected_list, userList).commit();
+        }
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 Log.d("rew", response.toString());
-                FragmentManager fm = getFragmentManager();
-                userInfoList = new ArrayList<UserInfo>();
+                responseUsers = new ArrayList<UserInfo>();
                 Gson gson = new Gson();
                 if (response != null) {
                     int len = response.length();
                     UserInfo[] users = gson.fromJson(response.toString(), UserInfo[].class);
+                    // save server data in database
+                    usersHelper.saveUserInfos(nameDb, users);
                     for (int i = 0; i < len; i++) {
-                        userInfoList.add(users[i]);
+                       responseUsers.add(users[i]);
                     }
                 }
-                if (fm.findFragmentById(R.id.selected_list) == null) {
-                    userList = new UserListFragment();
-                    userList.userInfos = userInfoList;
-                    fm.beginTransaction().add(R.id.selected_list, userList).commit();
-                } else {
-                    userList.userInfos.addAll(userInfoList);
-                    userInfoList = userList.userInfos;
-                    userList.reload();
-                }
+
+                allUsers.addAll(responseUsers);
+                userList.userInfos = allUsers;
+                //responseUsers = userList.userInfos;
+                userList.reload();
+
                 currentPage += 1;
                 loading = false;
             } };
@@ -103,18 +115,20 @@ public class SelectListActivity extends AppCompatActivity implements ListView.On
         queue.add(getRequest);
     }
     ////////
+
     public void userListViewCreated() {
         tempListView  = userList.getListView();
         tempListView.setOnScrollListener(this);
     }
-    private int preLast;
 
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                 && (tempListView.getLastVisiblePosition() - tempListView.getHeaderViewsCount() -
-                tempListView.getFooterViewsCount()) >= (userInfoList.size() - 1)) {
-            System.out.println("Test user list view");
-            getUserInfoRequest();
+                tempListView.getFooterViewsCount()) >= (userList.userInfos.size() - 1)) {
+            //System.out.println("Test user list view");
+            if(countrySelected.equals("all") && stateSelected.equals("all") && yearSelected.equals("all")) {
+                getUserInfoRequest();
+            }
             // Now your listview has hit the bottom
         }
     }
@@ -207,22 +221,22 @@ public class SelectListActivity extends AppCompatActivity implements ListView.On
         updateData();
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
+    @Override
+    public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-
-        public void updateData() {
-            filteredUserInfoList.clear();
-            for(int i = 0; i < userInfoList.size(); i++) {
-                UserInfo userInfo = userInfoList.get(i);
-                if((userInfo.country.equals(countrySelected)||countrySelected.equals("all"))&& (userInfo.state.equals(stateSelected)||stateSelected.equals("all"))
-                        && (userInfo.year.equals(yearSelected)||yearSelected.equals("all"))){
-                    filteredUserInfoList.add(userInfo);
+    public void updateData() {
+        filteredUsers.clear();
+        for(int i = 0; i < allUsers.size(); i++) {
+            UserInfo userInfo = allUsers.get(i);
+            if((userInfo.country.equals(countrySelected)||countrySelected.equals("all"))&& (userInfo.state.equals(stateSelected)||stateSelected.equals("all"))
+                    && (userInfo.year.equals(yearSelected)||yearSelected.equals("all"))){
+                filteredUsers.add(userInfo);
             }
         }
-        if(userList != null && filteredUserInfoList != null) {
-            userList.updateData(filteredUserInfoList);
+        if(userList != null && filteredUsers != null) {
+            userList.userInfos = filteredUsers;
+            userList.reload();
         }
     }
 }

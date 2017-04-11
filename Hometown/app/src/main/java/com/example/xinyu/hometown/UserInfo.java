@@ -12,6 +12,5 @@ public class UserInfo {
     public String year;
     public String id;
     public String latitude;
-    //public String time-stamp;
     public String country;
 }
