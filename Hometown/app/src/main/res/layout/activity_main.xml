@@ -6,7 +6,19 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.example.xinyu.hometown.MainActivity">
-
+    <TableRow>
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email" />
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:inputType="textEmailAddress" />
+    </TableRow>
     <TableRow>
         <TextView
             android:id="@+id/label_nickname"

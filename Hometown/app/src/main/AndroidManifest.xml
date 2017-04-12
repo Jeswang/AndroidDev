@@ -23,6 +23,7 @@
         <activity android:name=".SelectListActivity"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".SetLatLngActivity"></activity>
+        <activity android:name=".SignedInActivity"></activity>
         SetLatLng
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

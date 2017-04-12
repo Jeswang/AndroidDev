@@ -3,8 +3,7 @@ package com.example.xinyu.hometown;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,6 +23,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -35,13 +40,19 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     EditText passwordEdit;
     EditText yearEdit;
     EditText cityEdit;
+    EditText emailEdit;
     boolean isNicknameValid;
     boolean isPasswordValid;
     boolean isYearValid;
     RequestQueue queue;
-    //
+
+    private static final String TAG = "EmailPassword";
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
     private DatabaseHelper namesHelper;
-    //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,16 +106,11 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             }
         });
         cityEdit = (EditText)findViewById(R.id.city);
-        //
-        namesHelper = (new DatabaseHelper(this));
-        SQLiteDatabase nameDb = namesHelper.getWritableDatabase();
-        Cursor result = nameDb.rawQuery("select * from hometown where nickname = ?",
-                new String[] { "zxy" });
-        int rowCount = result.getCount(); if (rowCount > 0) {
-            result.moveToFirst();
-            System.out.println(result.getString(1) + " " + result.getString(2)+ " " + result.getString(3)+ " " + result.getString(4)+ " " + result.getInt(5));
-        }
-        //
+        emailEdit = (EditText)findViewById(R.id.email);
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -177,10 +183,11 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         }
         else {
             getUserInfoPost();
+            getUserInfoPostFirebase();
         }
     }
     public void userLogin(View button) {
-        Intent go = new Intent(this,UserSigninActivity.class);
+        Intent go = new Intent(this,SignedInActivity.class);
         startActivity(go);
     }
     public void getUserInfoPost() {
@@ -229,9 +236,26 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,url, jsonBody, success, failure);
             queue = Volley.newRequestQueue(this);
             queue.add(getRequest);
-        } catch(Exception e) {
-
-        }
-
+        } catch(Exception e) { }
+    }
+    public void getUserInfoPostFirebase() {
+        String email = emailEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                SharedPreferences sharedPref = MainActivity.this.getSharedPreferences("preference", Context.MODE_PRIVATE);
+                String email = emailEdit.getText().toString();
+                String nickname = nicknameEdit.getText().toString();
+                String longitude = sharedPref.getString("saved_lng", "").toString();
+                String latitude = sharedPref.getString("saved_lat", "").toString();
+                Person user = new Person(email,nickname,longitude,latitude);
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference userList = database.getReference("userList");
+                userList.child(nickname).setValue(user);
+            }
+        });
     }
 }

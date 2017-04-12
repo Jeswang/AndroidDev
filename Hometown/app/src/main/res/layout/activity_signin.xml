@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin">
     <TextView
-        android:id="@+id/signin_label_nickname"
+        android:id="@+id/signin_label_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nickname"/>
-
+        android:text="@string/email"/>
     <EditText
-        android:id="@+id/signin_nickname"
+        android:id="@+id/signin_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz0123456789"/>
-
+        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/signin_label_password"
         android:layout_width="wrap_content"
@@ -32,6 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_signin"
-        android:onClick="signin"/>
+        android:onClick="signIn"/>
 
 </LinearLayout>
