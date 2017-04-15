@@ -1,5 +1,6 @@
 package com.example.xinyu.hometown;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -47,13 +48,16 @@ public class SignedInActivity extends AppCompatActivity {
 
     public void signIn(View button) {
         // [START sign_in_with_email]
-        String email = emailField.getText().toString();
+        final String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Intent go = new Intent(SignedInActivity.this,SelectStateActivity2.class);
+                        go.putExtra("email",email);
+                        startActivity(go);
                     }
                 });
         // [END sign_in_with_email]

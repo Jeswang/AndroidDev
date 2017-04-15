@@ -1,23 +1,33 @@
 package com.example.xinyu.hometown;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by xinyu on 4/11/17.
  */
 
 public class Message {
-    private String userEmail;
-    private String time;
-    private String messageContent;
+    private String user;
+    private int time;
+    private String content;
 
     public Message() {};
 
-    public Message(String userEmail, String time, String content) {
-        this.userEmail = userEmail;
+    public Message(String user, int time, String content) {
+        this.user = user;
         this.time = time;
-        this.messageContent = content;
+        this.content = content;
     }
 
-    public String getUserEmail() { return userEmail;}
-    public String getTime() { return time;}
-    public String getContent() { return messageContent;}
+    public String getUser() { return user;}
+    public int getTime() { return time;}
+    public String getContent() { return content;}
+
+    public String getTimeString() {
+        Date expiry = new Date(time);
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(expiry);
+    }
 }

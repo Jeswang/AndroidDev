@@ -38,13 +38,13 @@ public class FirebaseCustomArrayAdapter extends ArrayAdapter<Person> {
         View view;
 
         if (convertView == null) {
-            view = mInflater.inflate(R.layout.single_item, parent, false);
+            view = mInflater.inflate(R.layout.firebase_item, parent, false);
         } else {
             view = convertView;
         }
 
         Person item = getItem(position);
-        ((TextView)view.findViewById(R.id.list_nickname)).setText(item.getNickname());
+        ((TextView)view.findViewById(R.id.firebase_item_nickname)).setText(item.getNickname());
         return view;
     }
 }
