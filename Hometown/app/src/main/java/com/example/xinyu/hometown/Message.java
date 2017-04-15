@@ -9,24 +9,24 @@ import java.util.Date;
  */
 
 public class Message {
-    private String user;
-    private int time;
-    private String content;
+    public String user;
+    public Long time;
+    public String content;
 
     public Message() {};
 
-    public Message(String user, int time, String content) {
+    public Message(String user, Long time, String content) {
         this.user = user;
         this.time = time;
         this.content = content;
     }
 
     public String getUser() { return user;}
-    public int getTime() { return time;}
+    public Long getTime() { return time;}
     public String getContent() { return content;}
 
     public String getTimeString() {
-        Date expiry = new Date(time);
+        Date expiry = new Date(time*1000);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return df.format(expiry);
     }

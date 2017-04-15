@@ -2,12 +2,19 @@ package com.example.xinyu.hometown;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -27,11 +34,16 @@ import org.json.JSONArray;
  * Created by xinyu on 3/19/17.
  */
 
-public class SelectStateActivity3 extends AppCompatActivity implements StateListFragment3.OnStateSelectedListener {
+public class SelectStateActivity3 extends AppCompatActivity {
     String selectedStateName;
     StateListFragment3 stateList;
     TextView selectedState;
     int numberOfMessage = 0;
+    String chatUser1;
+    String chatUser2;
+
+    private String m_Text = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +51,8 @@ public class SelectStateActivity3 extends AppCompatActivity implements StateList
         findViewById(R.id.selected_state).setVisibility(View.INVISIBLE);
         //
         Intent getIntent = getIntent();
-        String chatUser1 = getIntent.getStringExtra("chatUser1");
-        String chatUser2 = getIntent.getStringExtra("chatUser2");
+        chatUser1 = getIntent.getStringExtra("chatUser1");
+        chatUser2 = getIntent.getStringExtra("chatUser2");
         //
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("chatList/"+chatUser1+"-"+chatUser2);
@@ -94,15 +106,43 @@ public class SelectStateActivity3 extends AppCompatActivity implements StateList
         });
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chat_menu, menu);
+        return true;
+    }
 
-    public void onStateSelected(String stateName) {
-        selectedStateName = stateName;
-        selectedState = (TextView)findViewById(R.id.selected_state);
-        selectedState.setText(selectedStateName);
-        SharedPreferences sharedPref = this.getSharedPreferences("preference", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.saved_state), selectedState.getText().toString());
-        editor.commit();
-        finish();
+    public void sendMessage(MenuItem selectedMenu) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Message");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference mList = database.getReference("chatList/"+chatUser1+"-"+chatUser2);
+                Message m = new Message();
+                m.user = chatUser2;
+                m.content = m_Text;
+                m.time = System.currentTimeMillis()/1000;
+                mList.push().setValue(m);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }

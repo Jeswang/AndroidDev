@@ -92,7 +92,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             for(int i = 0; i < userInfoList.size(); i++) {
                 double latitude = Double.parseDouble(userInfoList.get(i).latitude);
                 double longitude = Double.parseDouble(userInfoList.get(i).longitude);
-                System.out.println("lat: "+latitude+"lng: "+longitude );
+                //System.out.println("lat: "+latitude+"lng: "+longitude );
                 LatLng latlng = new LatLng(latitude, longitude);
                 MarkerOptions classRoom = new MarkerOptions().position(latlng).title(userInfoList.get(i).nickname);
                 mMap.addMarker(classRoom);
