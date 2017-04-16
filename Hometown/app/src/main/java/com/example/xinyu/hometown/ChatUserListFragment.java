@@ -14,9 +14,27 @@ import android.widget.ListView;
  * Created by xinyu on 3/19/17.
  */
 
-public class StateListFragment3 extends ListFragment {
+public class ChatUserListFragment extends ListFragment {
     String[] numbersText;
+    public interface OnUserSelectedListener {
+        public void onUserSelected(String userName);
+    }
 
+    ChatUserListFragment.OnUserSelectedListener mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (ChatUserListFragment.OnUserSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnStateSelectedListener");
+        }
+    }
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        mListener.onUserSelected(numbersText[(int)position]);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

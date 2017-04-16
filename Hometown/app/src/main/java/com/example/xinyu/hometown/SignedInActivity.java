@@ -6,14 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by xinyu on 4/9/17.
@@ -55,7 +53,7 @@ public class SignedInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Intent go = new Intent(SignedInActivity.this,SelectStateActivity2.class);
+                        Intent go = new Intent(SignedInActivity.this,ChatUserListActivity.class);
                         go.putExtra("email",email);
                         startActivity(go);
                     }

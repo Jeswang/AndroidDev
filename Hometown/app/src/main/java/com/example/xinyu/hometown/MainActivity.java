@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     public void userLogin(View button) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Intent go = new Intent(this,SelectStateActivity2.class);
+            Intent go = new Intent(this,ChatUserListActivity.class);
             go.putExtra("email",user.getEmail());
             startActivity(go);
         } else {

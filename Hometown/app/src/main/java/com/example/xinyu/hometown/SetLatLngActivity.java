@@ -31,8 +31,8 @@ public class SetLatLngActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         nMap = googleMap;
         SharedPreferences sharedPref = this.getSharedPreferences("preference", Context.MODE_PRIVATE);
-        double latitude = Double.parseDouble(sharedPref.getString("saved_lat", ""));
-        double longitude = Double.parseDouble(sharedPref.getString("saved_lng", ""));
+        double latitude = Double.parseDouble(sharedPref.getString("saved_lat", "0"));
+        double longitude = Double.parseDouble(sharedPref.getString("saved_lng", "0"));
         if(latitude != 0 && longitude != 0) {
             LatLng latlng = new LatLng(latitude, longitude);
             MarkerOptions classRoom = new MarkerOptions().position(latlng).title("current location");
