@@ -4,15 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <fragment
-        android:id="@+id/titles"
+        class="com.example.xinyu.hometown.ChatContentListFragment"
+        android:id="@+id/contentList"
         android:layout_weight="1"
         android:layout_width="0px"
         android:layout_height="match_parent" />
-    <FrameLayout
-        android:id="@+id/details"
-        android:layout_weight="1"
-        android:layout_width="0px"
-        android:layout_height="match_parent" />
-
-
 </LinearLayout>

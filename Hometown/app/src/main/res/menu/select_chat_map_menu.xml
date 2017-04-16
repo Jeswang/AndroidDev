@@ -4,6 +4,8 @@
 
     <item android:title="select from map"
         android:onClick="selectChatMap"/>
+    <item android:title="Send Message"
+        android:onClick="sendMessage"/>
     <item android:title="log out"
         android:onClick="logOut"/>
 </menu>

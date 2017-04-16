@@ -15,7 +15,7 @@ import android.widget.ListView;
  */
 
 public class ChatUserListFragment extends ListFragment {
-    String[] numbersText;
+    ArrayAdapter<String> adapter;
     public interface OnUserSelectedListener {
         public void onUserSelected(String userName);
     }
@@ -33,19 +33,19 @@ public class ChatUserListFragment extends ListFragment {
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mListener.onUserSelected(numbersText[(int)position]);
+        mListener.onUserSelected(adapter.getItem(position));
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                inflater.getContext(), android.R.layout.simple_list_item_1,
-                numbersText);
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        adapter = new ArrayAdapter<String>(
+                inflater.getContext(), android.R.layout.simple_list_item_1);
         setListAdapter(adapter);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
-    public void reload() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
+    public void reload(String s) {
+        adapter.add(s);
+        adapter.notifyDataSetChanged();
     }
 }
