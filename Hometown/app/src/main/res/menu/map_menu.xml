@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:actionMenu="http://schemas.android.com/apk/res-auto">
+
+    <item actionMenu:showAsAction="ifRoom"
+        android:title="Reload"
+        android:onClick="reloadMap"/>
+</menu>

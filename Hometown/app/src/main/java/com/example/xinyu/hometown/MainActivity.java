@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -187,8 +188,16 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         }
     }
     public void userLogin(View button) {
-        Intent go = new Intent(this,SignedInActivity.class);
-        startActivity(go);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            Intent go = new Intent(this,SelectStateActivity2.class);
+            go.putExtra("email",user.getEmail());
+            startActivity(go);
+        } else {
+            Intent go = new Intent(this,SignedInActivity.class);
+            startActivity(go);
+        }
+
     }
     public void getUserInfoPost() {
         Log.i("rew", "Start");

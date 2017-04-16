@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -92,6 +94,17 @@ public class SelectStateActivity2 extends AppCompatActivity implements StateList
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.select_chat_map_menu, menu);
+        return true;
+    }
+
+    public void selectChatMap(MenuItem selectedMenu) {
+        Intent go = new Intent(this,ChatMapActivity.class);
+        startActivity(go);
+    }
 
     public void onStateSelected(String stateName) {
         Intent getIntent = getIntent();

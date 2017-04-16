@@ -26,6 +26,7 @@
         <activity android:name=".SignedInActivity"></activity>
         <activity android:name=".SelectStateActivity2"></activity>
         <activity android:name=".SelectStateActivity3"></activity>
+        <activity android:name=".ChatMapActivity"></activity>
         SetLatLng
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

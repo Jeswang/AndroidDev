@@ -16,25 +16,7 @@ import android.widget.ListView;
 
 public class StateListFragment3 extends ListFragment {
     String[] numbersText;
-    public interface OnStateSelectedListener {
-        public void onStateSelected(String countryName);
-    }
 
-    StateListFragment3.OnStateSelectedListener mListener;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (StateListFragment3.OnStateSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnStateSelectedListener");
-        }
-    }
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        mListener.onStateSelected(numbersText[(int)position]);
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
