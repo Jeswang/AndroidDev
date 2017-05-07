@@ -22,6 +22,10 @@ public class MyNoteListAdapter extends RecyclerView.Adapter<MyNoteListAdapter.Vi
     private OnRecyclerViewItemClickListener mOnItemClickListener ;
     private OnRecyclerViewItemLongClickListener mOnItemLongClickListener ;
 
+    public interface OnRecyclerViewItemLongClickListener {
+        void onItemLongClick(View view , Note note);
+    }
+
     public MyNoteListAdapter() {
         mNotes = new ArrayList<>();
     }
@@ -53,10 +57,6 @@ public class MyNoteListAdapter extends RecyclerView.Adapter<MyNoteListAdapter.Vi
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
-    }
-
-    public interface OnRecyclerViewItemLongClickListener {
-        void onItemLongClick(View view , Note note);
     }
 
     public void setOnItemLongClickListener(OnRecyclerViewItemLongClickListener listener) {

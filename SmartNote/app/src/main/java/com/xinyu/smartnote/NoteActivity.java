@@ -152,7 +152,7 @@ public class NoteActivity extends BaseActivity {
 
                     @Override
                     public void onNext(String text) {
-                        if (new File(text).exists()){
+                        if (text.startsWith("https://firebasestorage.googleapis.com")){
                             tv_note_content.addImageViewAtIndex(tv_note_content.getLastIndex(), text);
                         } else {
                             tv_note_content.addTextViewAtIndex(tv_note_content.getLastIndex(), text);
@@ -174,9 +174,8 @@ public class NoteActivity extends BaseActivity {
                 String text = textList.get(i);
                 if (text.contains("<img") && text.contains("src=")) {
                     String imagePath = StringUtils.getImgSrc(text);
-                    Bitmap bmp = imageLoader.loadImageSync(imagePath);
-                    imagePath = com.sendtion.xrichtext.SDCardUtil.saveToSdCard(bmp);
-                    if (new File(imagePath).exists()) {
+                    imageLoader.loadImageSync(imagePath);
+                    if (imagePath.startsWith("https://firebasestorage.googleapis.com")) {
                         subscriber.onNext(imagePath);
                     } else {
                         showToast("图片"+1+"已丢失，请重新插入！");

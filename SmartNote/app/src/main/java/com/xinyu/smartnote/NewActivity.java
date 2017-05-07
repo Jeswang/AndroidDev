@@ -201,7 +201,7 @@ public class NewActivity extends BaseActivity {
 
                     @Override
                     public void onNext(String text) {
-                        if (text.contains(SDCardUtil.getPictureDir())){
+                        if (text.startsWith("https://firebasestorage.googleapis.com")){
                             et_new_content.addImageViewAtIndex(et_new_content.getLastIndex(), text);
                         } else {
                             et_new_content.addEditTextAtIndex(et_new_content.getLastIndex(), text);
@@ -214,17 +214,15 @@ public class NewActivity extends BaseActivity {
      * 显示数据
      */
     protected void showEditData(Subscriber<? super String> subscriber, String html) {
+        ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
         try{
             List<String> textList = StringUtils.cutStringByImgTag(html);
             for (int i = 0; i < textList.size(); i++) {
                 String text = textList.get(i);
                 if (text.contains("<img")) {
                     String imagePath = StringUtils.getImgSrc(text);
-                    ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
-                    Bitmap bmp = imageLoader.loadImageSync(imagePath);
-                    imagePath = com.sendtion.xrichtext.SDCardUtil.saveToSdCard(bmp);
-
-                    if (new File(imagePath).exists()) {
+                    imageLoader.loadImageSync(imagePath);
+                    if (imagePath.startsWith("https://firebasestorage.googleapis.com")) {
                         subscriber.onNext(imagePath);
                     } else {
                         showToast("图片"+i+"已丢失，请重新插入！");
