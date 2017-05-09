@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Title"
+        android:layout_below="@+id/Title"
+        android:layout_marginTop="18dp"
+        android:text="Starts"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/Starts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/textView"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Starts"
+        android:layout_below="@+id/Starts"
+        android:layout_marginTop="17dp"
+        android:text="Time"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:ems="10"
+        android:inputType="textPersonName"
+        />
+
+    <Button
+        android:id="@+id/Save2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        android:onClick="timechoose"
+        android:layout_alignTop="@+id/Time"
+        android:layout_alignStart="@+id/Save1" />
+
+    <Button
+        android:id="@+id/Save1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SET"
+        android:layout_alignTop="@+id/Starts"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:onClick="datechoose"/>
+
+    <TextView
+        android:id="@+id/Note1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/Note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:maxLines="5"
+        android:layout_below="@+id/Note1"
+        android:layout_alignStart="@+id/Note1"
+        android:background="@android:drawable/edit_text"
+        android:gravity="top"/>
+
+</RelativeLayout>
