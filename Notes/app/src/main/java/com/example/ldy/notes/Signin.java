@@ -89,6 +89,19 @@ public class Signin extends AppCompatActivity {
                 });
     }
     public void SIGNup(View view){
+        String email1=account.getText().toString();
+        String password1=password.getText().toString();
+        mAuth.createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    FirebaseUser user = mAuth.getCurrentUser();
 
+                }
+                else{
+                    Toast.makeText(Signin.this,"Already email or password 6 digits at least",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

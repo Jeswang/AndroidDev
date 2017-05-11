@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -60,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         NewEvent.daychoose=Tday;
         NewEvent.monthchoose=Tmonth;
 
-        String[] strs = new String[] {
-                "first", "second", "third", "fourth", "fifth"};
        // Listview.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strs));
 
         mAuth = FirebaseAuth.getInstance();
@@ -92,30 +92,44 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         ref.addValueEventListener(refListener);
-        Listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dataTitle));
+        Log.i("time",dataTime.get(0));
+       // Listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dataTitle));
+        Listview.setOnItemClickListener(new ItemClickEvent());
         Log.i("user", usernow);
         Log.i("year", Integer.valueOf(Tyear).toString());
         datePicker.init(Tyear, Tmonth, Tday, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int month, int day) {
                 chooseyear=year;
-                choosemonth=month;
+                choosemonth=month+1;
                 chooseday=day;
                 choose.clear();
+                String mm = chooseyear+"."+choosemonth+"."+chooseday;
                 for (int i=0;i<dataTime.size();i++){
-                    if(dataTime.get(i)==String.valueOf(chooseyear)+"."+String.valueOf(choosemonth)+"."+String.valueOf(chooseday)){
+                    if(dataTime.get(i).equals(mm)){
                         choose.add(dataTitle.get(i));
                     }
                 }
-                choose.clear();
-                choose.add("kkkk");
-                Log.i("kkk",choose.get(0));
                 Listview.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, choose));
             }
         });
-
     }
 
+    private final class ItemClickEvent implements AdapterView.OnItemClickListener {
+        @Override
+        //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                long arg3) {
+            //通过单击事件，获得单击选项的内容
+            String text = Listview.getItemAtPosition(arg2)+"";
+            Log.i("choose",choose.get(arg2));
+            Shownote.chooseTitle=choose.get(arg2);
+            Shownote.chooseNote=dataContent;
+            Shownote.chooseTitleHere=dataTitle;
+            Intent go = new Intent(getApplication(),Shownote.class);
+            startActivity(go);
+        }
+    }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
