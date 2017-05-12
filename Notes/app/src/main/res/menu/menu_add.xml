@@ -2,11 +2,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/newEvent"
-        android:title="New Event"
+        android:id="@+id/add"
+        android:title="New"
         app:showAsAction="ifRoom"></item>
     <item
-        android:id="@+id/LOGout"
-        android:title="LogOut"
+        android:id="@+id/logout"
+        android:title="logout"
         app:showAsAction="ifRoom"></item>
 </menu>

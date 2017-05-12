@@ -10,7 +10,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shownote extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity {
     EditText noteshow;
     Button back;
     public static String chooseTitle;

@@ -20,36 +20,38 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.ldy.notes.R.id.newEvent;
-import static com.example.ldy.notes.R.id.textView;
-
-public class Signin extends AppCompatActivity {
-    EditText account;
-    EditText password;
-    FirebaseAuth mAuth;
-    FirebaseDatabase database;
+public class LoginActivity extends AppCompatActivity {
+    private EditText mEmailView;
+    private EditText mPasswordView;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signin);
-        account = (EditText)findViewById(R.id.editText);
-        password = (EditText)findViewById(R.id.editText2);
+        setContentView(R.layout.activity_login);
+
+        mEmailView = (EditText)findViewById(R.id.email);
+        mPasswordView = (EditText)findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("rnote/");
-        ValueEventListener refListener = new ValueEventListener() {
+        if (currentUser != null) {
+            loginSuccess();
+        }
+        //mDatabase = FirebaseDatabase.getInstance();
+        //DatabaseReference ref = mDatabase.getReference("rnote/");
+
+        /*ValueEventListener refListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 MainActivity.dataTitle.clear();
                 MainActivity.dataReminder.clear();
                 MainActivity.dataContent.clear();
-                MainActivity.dataemail.clear();
+                MainActivity.dataEmail.clear();
                 MainActivity.dataTime.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    MainActivity.dataemail.add(postSnapshot.child("email").getValue().toString());
+                    MainActivity.dataEmail.add(postSnapshot.child("email").getValue().toString());
                     MainActivity.dataContent.add(postSnapshot.child("content").getValue().toString());
                     MainActivity.dataReminder.add(postSnapshot.child("reminder").getValue().toString());
                     MainActivity.dataTitle.add(postSnapshot.child("title").getValue().toString());
@@ -57,50 +59,50 @@ public class Signin extends AppCompatActivity {
                 }
 
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         };
-        ref.addValueEventListener(refListener);
-
-
+        ref.addValueEventListener(refListener);*/
     }
-    public void SIGNin(View view){
-       final String email = account.getText().toString();
-        String passwordEnter = password.getText().toString();
-        mAuth.signInWithEmailAndPassword(email, passwordEnter)
+    public void signIn(View view){
+        String mEmail = mEmailView.getText().toString();
+        String mPassword = mPasswordView.getText().toString();
+        mAuth.signInWithEmailAndPassword(mEmail, mPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            MainActivity.usernow = email;
-                            NewEvent.Usernow = email;
-                            Intent go = new Intent(getApplication(),MainActivity.class);
-                            startActivity(go);
-                        }
-                        if (!task.isSuccessful()) {
-                            Log.i("rew", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(getApplicationContext(), "wrong email or password", Toast.LENGTH_SHORT).show();
-
-                        }
+                    if(task.isSuccessful()){
+                       loginSuccess();
+                    }
+                    if (!task.isSuccessful()) {
+                        Log.i("rew", "signInWithEmail:failed", task.getException());
+                        Toast.makeText(getApplicationContext(), "wrong email or password", Toast.LENGTH_SHORT).show();
+                    }
                     }
                 });
     }
-    public void SIGNup(View view){
-        String email1=account.getText().toString();
-        String password1=password.getText().toString();
+
+    public void loginSuccess() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String mUserId = user.getUid();
+        Intent go = new Intent(LoginActivity.this,MainActivity.class);
+        go.putExtra("userId", mUserId);
+        startActivity(go);
+    }
+    public void signUp(View view){
+        String email1= mEmailView.getText().toString();
+        String password1=mPasswordView.getText().toString();
         mAuth.createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    FirebaseUser user = mAuth.getCurrentUser();
-
-                }
-                else{
-                    Toast.makeText(Signin.this,"Already email or password 6 digits at least",Toast.LENGTH_SHORT).show();
-                }
+            if(task.isSuccessful()){
+                loginSuccess();
+            }
+            else{
+                Toast.makeText(LoginActivity.this,"Already email or password 6 digits at least",Toast.LENGTH_SHORT).show();
+            }
             }
         });
     }

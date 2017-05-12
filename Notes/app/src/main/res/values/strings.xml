@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Notes</string>
-    <string name="save">Save</string>
+    <string name = "app_name">Notes</string>
+    <string name = "save">Save</string>
+    <string name = "signIn">Sign In</string>
+    <string name = "signUp">Sign Up</string>
+    <string name = "enterContent">Please enter content</string>
 </resources>

@@ -10,5 +10,5 @@
         android:id="@+id/cancelEvent"
         android:title="Cancel"
         app:showAsAction="ifRoom"
-        tools:onClick="CANCEL"></item>
+        tools:onClick="cancel"></item>
 </menu>
