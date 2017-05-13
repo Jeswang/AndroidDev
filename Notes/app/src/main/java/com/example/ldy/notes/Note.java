@@ -9,6 +9,7 @@ public class Note {
     private String date; //
     private String time; // time reminder
     private String key;
+    private String imageURL;
 
     public int getId() { return id;}
     public void setId(int id) { this.id = id;}
@@ -24,6 +25,9 @@ public class Note {
 
     public String getTime() { return time;}
     public void setTime(String time) { this.time = time;}
+
+    public String getImageURL() { return imageURL; }
+    public void setImageURL(String imageURL) { this.imageURL = imageURL; }
 
     public String getKey() { return key;}
 

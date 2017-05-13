@@ -1,4 +1,4 @@
-package com.xinyu.smartnote.util;
+package com.example.ldy;
 
 import android.app.Activity;
 import android.content.Context;

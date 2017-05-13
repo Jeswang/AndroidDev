@@ -5,4 +5,7 @@
     <string name = "signUp">Sign Up</string>
     <string name = "enterContent">Please enter content</string>
     <string name = "image">Upload Image</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 </resources>
