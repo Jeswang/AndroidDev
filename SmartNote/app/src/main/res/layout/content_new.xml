@@ -48,8 +48,8 @@
     <com.sendtion.xrichtext.RichTextEditor
         android:id="@+id/et_new_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="@dimen/text_size_16"
-        android:textColor="@color/grey_600"/>
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_600"
+        android:textSize="@dimen/text_size_16" />
 
 </LinearLayout>
